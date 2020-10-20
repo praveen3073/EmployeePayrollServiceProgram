@@ -49,6 +49,10 @@ public class EmployeePayrollService {
         }
     }
 
+    public List<EmployeePayrollData> readFileData() {
+        return new EmployeePayrollIO().readData();
+    }
+
     public int countEntries(IOCommand ioType) {
         if(ioType.equals(IOCommand.FILE_IO))
             return new EmployeePayrollIO().countEntries();
@@ -62,6 +66,8 @@ public class EmployeePayrollService {
         employee.writeEmployeeData(IOCommand.CONSOLE_IO);
         employee.writeEmployeeData(IOCommand.FILE_IO);
         System.out.println("Output from file: ");
-        employee.printData();
+        for (EmployeePayrollData tempEmployee : employee.readFileData()) {
+            tempEmployee.printData();
+        }
     }
 }
