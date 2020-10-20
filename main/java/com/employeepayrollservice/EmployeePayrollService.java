@@ -15,16 +15,10 @@ public class EmployeePayrollService {
         this.employeeDataList = employeeDataList;
     }
 
-    /**Constructor For Main Class
-     *
-     */
     public EmployeePayrollService() {
         employeeDataList = new ArrayList<EmployeePayrollData>();
     }
 
-    /**Read Emp Data from console <br>
-     * Adds data to Employee Data List
-     */
     public void readEmployeeData() {
         Scanner consoleScanner=new Scanner(System.in);
         System.out.print("Enter Employee ID : ");
@@ -39,9 +33,10 @@ public class EmployeePayrollService {
         consoleScanner.close();
     }
 
-    /**Write Emp Data to console and file
-     * @param ioType <br> CONSOLE_IO or FILE_IO
-     */
+    public void printData() {
+        new EmployeePayrollIO().printData();
+    }
+
     public void writeEmployeeData(IOCommand ioType) {
         if(ioType.equals(ioType.CONSOLE_IO)) {
             System.out.println("Writing Employee Payroll Data to Console.");
@@ -62,9 +57,11 @@ public class EmployeePayrollService {
 
     //Main Method
     public static void main(String[] args) {
-        EmployeePayrollService employeeFunction = new EmployeePayrollService();
-        employeeFunction.readEmployeeData();
-        employeeFunction.writeEmployeeData(IOCommand.CONSOLE_IO);
-        employeeFunction.writeEmployeeData(IOCommand.FILE_IO);
+        EmployeePayrollService employee = new EmployeePayrollService();
+        employee.readEmployeeData();
+        employee.writeEmployeeData(IOCommand.CONSOLE_IO);
+        employee.writeEmployeeData(IOCommand.FILE_IO);
+        System.out.println("Output from file: ");
+        employee.printData();
     }
 }

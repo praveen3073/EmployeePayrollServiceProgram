@@ -24,6 +24,17 @@ public class EmployeePayrollIO {
         }
     }
 
+    /**Method to read data from file to console
+     *
+     */
+    public void printData() {
+        try {
+            Files.lines(new File(PAYROLL_FNAME).toPath()).forEach(System.out::println);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
     public int countEntries() {
 
         int entries = 0;
