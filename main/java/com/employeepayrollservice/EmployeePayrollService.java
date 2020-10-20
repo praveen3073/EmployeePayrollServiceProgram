@@ -5,34 +5,66 @@ import java.util.List;
 import java.util.Scanner;
 
 public class EmployeePayrollService {
-    private final List<EmployeePayrollData> employeePayrollList;
+    public enum IOCommand
+    {CONSOLE_IO,FILE_IO,DB_IO,REST_IO}
 
-    public EmployeePayrollService(List<EmployeePayrollData> employeePayrollList) {
-        this.employeePayrollList = employeePayrollList;
+    //Declaring global var list of employee data
+    public List<EmployeePayrollData> employeeDataList;
+
+    public void setEmployeeDataList(List<EmployeePayrollData> employeeDataList) {
+        this.employeeDataList = employeeDataList;
     }
 
+    /**Constructor For Main Class
+     *
+     */
+    public EmployeePayrollService() {
+        employeeDataList = new ArrayList<EmployeePayrollData>();
+    }
+
+    /**Read Emp Data from console <br>
+     * Adds data to Employee Data List
+     */
+    public void readEmployeeData() {
+        Scanner consoleScanner=new Scanner(System.in);
+        System.out.print("Enter Employee ID : ");
+        int id = consoleScanner.nextInt();
+        System.out.print("Enter Employee name : ");
+        String name = consoleScanner.next();
+        System.out.print("Enter Employee salary : ");
+        double salary = consoleScanner.nextDouble();
+        EmployeePayrollData employee=new EmployeePayrollData(id,name,salary);
+        System.out.println(employee);
+        employeeDataList.add(employee);
+        consoleScanner.close();
+    }
+
+    /**Write Emp Data to console and file
+     * @param ioType <br> CONSOLE_IO or FILE_IO
+     */
+    public void writeEmployeeData(IOCommand ioType) {
+        if(ioType.equals(ioType.CONSOLE_IO)) {
+            System.out.println("Writing Employee Payroll Data to Console.");
+            for (EmployeePayrollData employee:employeeDataList) {
+                employee.printData();
+            }
+        }else if (ioType.equals(ioType.FILE_IO)){
+            new EmployeePayrollIO().writeData(employeeDataList);
+            System.out.println("Write in File");
+        }
+    }
+
+    public int countEntries(IOCommand ioType) {
+        if(ioType.equals(IOCommand.FILE_IO))
+            return new EmployeePayrollIO().countEntries();
+        return 0;
+    }
+
+    //Main Method
     public static void main(String[] args) {
-        ArrayList<EmployeePayrollData> employeePayrollList = new
-                ArrayList<>();
-        EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollList);
-        Scanner consoleInputReader = new Scanner(System.in);
-        employeePayrollService.readEmployeePayrollData(consoleInputReader);
-        employeePayrollService.writeEmployeePayrollData();
-    }
-
-    private void readEmployeePayrollData(Scanner consoleInputReader) {
-        System.out.print("Enter Employee ID: ");
-        int id = consoleInputReader.nextInt();
-        consoleInputReader.nextLine();
-        System.out.print("Enter Employee Name: ");
-        String name = consoleInputReader.nextLine();
-        System.out.print("Enter Employee Salary: ");
-        double salary = consoleInputReader.nextDouble();
-        employeePayrollList.add(new EmployeePayrollData(id, name, salary));
-    }
-
-    private void writeEmployeePayrollData() {
-        System.out.println("\nWriting Employee Payroll Data to Console:");
-        System.out.println(employeePayrollList);
+        EmployeePayrollService employeeFunction = new EmployeePayrollService();
+        employeeFunction.readEmployeeData();
+        employeeFunction.writeEmployeeData(IOCommand.CONSOLE_IO);
+        employeeFunction.writeEmployeeData(IOCommand.FILE_IO);
     }
 }

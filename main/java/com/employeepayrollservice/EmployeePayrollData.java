@@ -1,9 +1,9 @@
 package com.employeepayrollservice;
 
 public class EmployeePayrollData {
-    private int id;
-    private String name;
-    private double salary;
+    public int id;
+    public String name;
+    public double salary;
 
     public EmployeePayrollData(int id, String name, double salary) {
         this.id = id;
@@ -11,31 +11,21 @@ public class EmployeePayrollData {
         this.salary = salary;
     }
 
-    public int getId() {
-        return id;
+    public void printData() {
+        System.out.println("------------------------------------------------------");
+        System.out.println("Employee ID: "+id);
+        System.out.println("Employee Name: "+name);
+        System.out.println("Employee Salary: "+salary);
+        System.out.println("------------------------------------------------------");
+        System.out.println();
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String pushData() {
+        return "id = " + id + ", name = " + name + ", salary = " + salary;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-
+    @Override
     public String toString() {
-        return "{ id: " + id + ", name: " + name + ", salary: " + salary + "}";
+        return "Created new Employee Data";
     }
 }
